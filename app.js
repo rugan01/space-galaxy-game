@@ -1106,6 +1106,37 @@ class SpaceGame {
         // Sound placeholder - in a real game, you'd play actual sounds
         console.log(`Playing sound: ${type}`);
     }
+    
+    setupTouchControls() {
+    let isDragging = false;
+    
+    this.canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        isDragging = true;
+        if (this.gameState === 'playing') {
+            this.shoot(); // Fire on touch
+        }
+    }, { passive: false });
+    
+    this.canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!isDragging || this.gameState !== 'playing' || !this.rocket) return;
+        
+        const touch = e.touches[0];
+        const rect = this.canvas.getBoundingClientRect();
+        const touchX = ((touch.clientX - rect.left) / rect.width) * this.canvas.width;
+        const touchY = ((touch.clientY - rect.top) / rect.height) * this.canvas.height;
+        
+        // Move rocket to finger position
+        this.rocket.x = Math.max(30, Math.min(this.canvas.width - 30, touchX));
+        this.rocket.y = Math.max(30, Math.min(this.canvas.height - 30, touchY));
+    }, { passive: false });
+    
+    this.canvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        isDragging = false;
+    }, { passive: false });
+}
 }
 
 // Enhanced Game object classes
@@ -1239,36 +1270,6 @@ class Missile {
         
         ctx.restore();
     }
-    setupTouchControls() {
-    let isDragging = false;
-    
-    this.canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        isDragging = true;
-        if (this.gameState === 'playing') {
-            this.shoot(); // Fire on touch
-        }
-    }, { passive: false });
-    
-    this.canvas.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        if (!isDragging || this.gameState !== 'playing' || !this.rocket) return;
-        
-        const touch = e.touches[0];
-        const rect = this.canvas.getBoundingClientRect();
-        const touchX = ((touch.clientX - rect.left) / rect.width) * this.canvas.width;
-        const touchY = ((touch.clientY - rect.top) / rect.height) * this.canvas.height;
-        
-        // Move rocket to finger position
-        this.rocket.x = Math.max(30, Math.min(this.canvas.width - 30, touchX));
-        this.rocket.y = Math.max(30, Math.min(this.canvas.height - 30, touchY));
-    }, { passive: false });
-    
-    this.canvas.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        isDragging = false;
-    }, { passive: false });
-}
 }
 
 class Asteroid {

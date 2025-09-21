@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Galaxy Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen">
+            <div class="screen-content">
+                <h1 class="game-title">🚀 SPACE GALAXY ADVENTURE 🚀</h1>
+                <div class="subtitle">Blast through space and collect power-ups!</div>
+                <button id="play-btn" class="btn btn--primary btn--lg game-btn">
+                    ✨ PLAY GAME ✨
+                </button>
+                <button id="settings-btn" class="btn btn--secondary btn--lg game-btn">
+                    ⚙️ SETTINGS
+                </button>
+                <button id="instructions-btn" class="btn btn--outline btn--lg game-btn">
+                    📖 HOW TO PLAY
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen hidden">
+            <div class="screen-content settings-content">
+                <h2>⚙️ Game Settings</h2>
+                
+                <div class="settings-grid">
+                    <!-- Difficulty Settings -->
+                    <div class="setting-group">
+                        <h3>🎯 Difficulty Level</h3>
+                        <div class="difficulty-options">
+                            <button id="difficulty-easy" class="difficulty-btn" data-difficulty="easy">
+                                <div class="difficulty-icon">🐣</div>
+                                <div class="difficulty-name">Easy</div>
+                                <div class="difficulty-desc">Slower asteroids, more power-ups</div>
+                            </button>
+                            <button id="difficulty-normal" class="difficulty-btn active" data-difficulty="normal">
+                                <div class="difficulty-icon">🚀</div>
+                                <div class="difficulty-name">Normal</div>
+                                <div class="difficulty-desc">Balanced gameplay</div>
+                            </button>
+                            <button id="difficulty-hard" class="difficulty-btn" data-difficulty="hard">
+                                <div class="difficulty-icon">💀</div>
+                                <div class="difficulty-name">Hard</div>
+                                <div class="difficulty-desc">Fast asteroids, fewer power-ups</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Brightness Settings -->
+                    <div class="setting-group">
+                        <h3>💡 Brightness</h3>
+                        <div class="brightness-control">
+                            <label class="brightness-label">
+                                <span class="brightness-value" id="brightness-value">100%</span>
+                                <input type="range" id="brightness-slider" min="50" max="150" value="100" class="slider">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Theme Settings -->
+                    <div class="setting-group">
+                        <h3>🎨 Color Theme</h3>
+                        <div class="theme-options">
+                            <button id="theme-classic" class="theme-btn active" data-theme="classic">
+                                <div class="theme-preview classic-preview"></div>
+                                <div class="theme-name">Classic Space</div>
+                            </button>
+                            <button id="theme-nebula" class="theme-btn" data-theme="nebula">
+                                <div class="theme-preview nebula-preview"></div>
+                                <div class="theme-name">Light Nebula</div>
+                            </button>
+                            <button id="theme-dawn" class="theme-btn" data-theme="dawn">
+                                <div class="theme-preview dawn-preview"></div>
+                                <div class="theme-name">Cosmic Dawn</div>
+                            </button>
+                            <button id="theme-neon" class="theme-btn" data-theme="neon">
+                                <div class="theme-preview neon-preview"></div>
+                                <div class="theme-name">Neon Galaxy</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button id="reset-settings-btn" class="btn btn--outline game-btn">
+                        🔄 Reset to Default
+                    </button>
+                    <button id="back-to-menu-settings-btn" class="btn btn--primary btn--lg game-btn">
+                        ← Back to Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>🎮 How to Play</h2>
+                <div class="instructions-grid">
+                    <div class="instruction-item">
+                        <div class="control-icon">⬅️➡️⬆️⬇️</div>
+                        <div class="control-text">Use Arrow Keys or WASD to move your rocket</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="control-icon">🎯</div>
+                        <div class="control-text">Hold SPACEBAR or CLICK and hold to fire continuously</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="control-icon">💥</div>
+                        <div class="control-text">Destroy asteroids to earn points</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="control-icon">⭐</div>
+                        <div class="control-text">Collect power-ups: ❤️ Health, 🛡️ Shield, ⭐ Points, ⚡ Rapid Fire</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="control-icon">⚙️</div>
+                        <div class="control-text">Access settings during gameplay with the gear icon</div>
+                    </div>
+                </div>
+                <button id="start-game-btn" class="btn btn--primary btn--lg game-btn">
+                    🚀 START ADVENTURE 🚀
+                </button>
+                <button id="back-to-menu-btn" class="btn btn--secondary game-btn">
+                    ← Back to Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen hidden">
+            <!-- Game UI -->
+            <div class="game-ui">
+                <div class="ui-left">
+                    <div class="score-display">
+                        <span class="label">SCORE:</span>
+                        <span id="score" class="value">0</span>
+                    </div>
+                    <div class="multiplier-display">
+                        <span class="label">x</span>
+                        <span id="multiplier" class="value">1</span>
+                    </div>
+                    <div class="difficulty-indicator">
+                        <span class="label">DIFFICULTY:</span>
+                        <span id="current-difficulty" class="value">NORMAL</span>
+                    </div>
+                </div>
+                <div class="ui-center">
+                    <div class="lives-display">
+                        <span class="label">LIVES:</span>
+                        <div id="lives-container" class="lives-hearts"></div>
+                    </div>
+                </div>
+                <div class="ui-right">
+                    <div class="power-ups-display">
+                        <div id="active-powerups" class="active-powerups"></div>
+                    </div>
+                    <div class="game-controls">
+                        <button id="settings-gear-btn" class="btn btn--sm gear-btn">⚙️</button>
+                        <button id="pause-btn" class="btn btn--secondary btn--sm">⏸️ PAUSE</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Game Canvas -->
+            <div class="canvas-container">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+            </div>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen overlay hidden">
+            <div class="screen-content">
+                <h2>⏸️ Game Paused</h2>
+                <button id="resume-btn" class="btn btn--primary btn--lg game-btn">
+                    ▶️ RESUME
+                </button>
+                <button id="pause-settings-btn" class="btn btn--secondary game-btn">
+                    ⚙️ SETTINGS
+                </button>
+                <button id="restart-btn" class="btn btn--secondary game-btn">
+                    🔄 RESTART
+                </button>
+                <button id="main-menu-btn" class="btn btn--outline game-btn">
+                    🏠 MAIN MENU
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen overlay hidden">
+            <div class="screen-content">
+                <h2 id="game-over-title">💥 Game Over!</h2>
+                <div class="final-score">
+                    <div class="label">Final Score:</div>
+                    <div id="final-score" class="value">0</div>
+                </div>
+                <div id="high-score-message" class="high-score-message hidden">
+                    🎉 NEW HIGH SCORE! 🎉
+                </div>
+                <div class="high-score-display">
+                    <div class="label">High Score:</div>
+                    <div id="high-score" class="value">0</div>
+                </div>
+                <button id="try-again-btn" class="btn btn--primary btn--lg game-btn">
+                    🚀 TRY AGAIN! 🚀
+                </button>
+                <button id="menu-btn" class="btn btn--secondary game-btn">
+                    🏠 MAIN MENU
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
